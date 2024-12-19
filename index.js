@@ -570,7 +570,10 @@ app.use(express.json())
 app.use(
 	cors({
 		origin: [
+			'https://q-testing.webflow.io',
+			'https://quanta.world',
 			'https://www.quanta.world',
+			'http://localhost:63342',
 		],
 		methods: ['GET', 'POST'],
 		allowedHeaders: ['content-type'],
@@ -613,24 +616,24 @@ let quantaFTT = null
 
 async function initialize() {
 	try {
-		const sanityCheckerUrl = process.env.SANITY_CHECKER_INSTRUCTIONS
-		const solutionRefinerUrl = process.env.SOLUTION_REFINER_INSTRUCTIONS
-		const validityInstructionUrl = process.env.VALIDITY_INSTRUCTIONS
-		const qualityInstructionUrl = process.env.QUALITY_INSTRUCTIONS
-		const feedbackCleanerUrl = process.env.FEEDBACK_CLEANER_INSTRUCTIONS
+		const sanityCheckerUrl = process.env.SANITY_CHECKER_INSTRUCTIONS;
+		const solutionRefinerUrl = process.env.SOLUTION_REFINER_INSTRUCTIONS;
+		const validityInstructionUrl = process.env.VALIDITY_INSTRUCTIONS;
+		const qualityInstructionUrl = process.env.QUALITY_INSTRUCTIONS;
+		const feedbackCleanerUrl = process.env.FEEDBACK_CLEANER_INSTRUCTIONS;
 
-		const cotShotsSanityUrl = process.env.COT_SHOTS_SANITY_CHECKER
-		const cotShotsQualityUrl = process.env.COT_SHOTS_QUALITY_CHECKER
-		const cotShotsValidityUrl = process.env.COT_SHOTS_VALIDITY
+		const cotShotsSanityUrl = process.env.COT_SHOTS_SANITY_CHECKER;
+		const cotShotsQualityUrl = process.env.COT_SHOTS_QUALITY_CHECKER;
+		const cotShotsValidityUrl = process.env.COT_SHOTS_VALIDITY;
 
-		console.log(`cotShotsValidityUrl: ${cotShotsValidityUrl}`)
-		console.log(`cotShotsQualityUrl: ${cotShotsQualityUrl}`)
-		console.log(`cotShotsSanityUrl: ${cotShotsSanityUrl}`)
-		console.log(`feedbackCleanerUrl: ${feedbackCleanerUrl}`)
-		console.log(`qualityInstructionUrl: ${qualityInstructionUrl}`)
-		console.log(`validityInstructionUrl: ${validityInstructionUrl}`)
-		console.log(`solutionRefinerUrl: ${solutionRefinerUrl}`)
-		console.log(`sanityCheckerUrl: ${sanityCheckerUrl}`)
+		console.log(`cotShotsValidityUrl: ${cotShotsValidityUrl}`);
+		console.log(`cotShotsQualityUrl: ${cotShotsQualityUrl}`);
+		console.log(`cotShotsSanityUrl: ${cotShotsSanityUrl}`);
+		console.log(`feedbackCleanerUrl: ${feedbackCleanerUrl}`);
+		console.log(`qualityInstructionUrl: ${qualityInstructionUrl}`);
+		console.log(`validityInstructionUrl: ${validityInstructionUrl}`);
+		console.log(`solutionRefinerUrl: ${solutionRefinerUrl}`);
+		console.log(`sanityCheckerUrl: ${sanityCheckerUrl}`);
 
 		// Check if any environment variables are missing
 		if (
@@ -643,7 +646,7 @@ async function initialize() {
 			!cotShotsQualityUrl ||
 			!cotShotsValidityUrl
 		) {
-			throw new Error('One or more environment variables are not defined')
+			throw new Error('One or more environment variables are not defined');
 		}
 
 		// Load content
@@ -665,7 +668,7 @@ async function initialize() {
 			loadContentFromURL(cotShotsSanityUrl),
 			loadContentFromURL(cotShotsQualityUrl),
 			loadContentFromURL(cotShotsValidityUrl),
-		])
+		]);
 
 		// Verify content was loaded
 		if (
@@ -678,7 +681,7 @@ async function initialize() {
 			!cotShotsQuality ||
 			!cotShotsValidity
 		) {
-			throw new Error('Failed to load one or more instruction files')
+			throw new Error('Failed to load one or more instruction files');
 		}
 
 		// Initialize QuantaFTT
@@ -697,11 +700,11 @@ async function initialize() {
 			'gpt-4o',
 			'gpt-4o',
 			'gpt-4o'
-		)
+		);
 
-		console.log('QuantaFTT initialized successfully')
+		console.log('QuantaFTT initialized successfully');
 	} catch (error) {
-		console.error('Error during initialization:', error)
+		console.error('Error during initialization:', error);
 	}
 }
 
@@ -983,26 +986,22 @@ app.get('/status', async (req, res) => {
 
 app.get('/env-check', (req, res) => {
 	res.json({
-		DB_HOST: process.env.DB_HOST || 'Missing',
-		DB_USER: process.env.DB_USER || 'Missing',
-		DB_PASSWORD: process.env.DB_PASSWORD ? 'Provided' : 'Missing',
-		DB_NAME: process.env.DB_NAME || 'Missing',
-		OPENAI_API_KEY: process.env.OPENAI_API_KEY ? 'Provided' : 'Missing',
-		MS_KEY: process.env.MS_KEY ? 'Provided' : 'Missing',
-		SANITY_CHECKER_INSTRUCTIONS:
-			process.env.SANITY_CHECKER_INSTRUCTIONS || 'Missing',
-		SOLUTION_REFINER_INSTRUCTIONS:
-			process.env.SOLUTION_REFINER_INSTRUCTIONS || 'Missing',
-		VALIDITY_INSTRUCTIONS: process.env.VALIDITY_INSTRUCTIONS || 'Missing',
-		QUALITY_INSTRUCTIONS: process.env.QUALITY_INSTRUCTIONS || 'Missing',
-		FEEDBACK_CLEANER_INSTRUCTIONS:
-			process.env.FEEDBACK_CLEANER_INSTRUCTIONS || 'Missing',
-		COT_SHOTS_SANITY_CHECKER: process.env.COT_SHOTS_SANITY_CHECKER || 'Missing',
-		COT_SHOTS_QUALITY_CHECKER:
-			process.env.COT_SHOTS_QUALITY_CHECKER || 'Missing',
-		COT_SHOTS_VALIDITY: process.env.COT_SHOTS_VALIDITY || 'Missing',
-	})
-})
+			DB_HOST: process.env.DB_HOST || 'Missing',
+			DB_USER: process.env.DB_USER || 'Missing',
+			DB_PASSWORD: process.env.DB_PASSWORD ? 'Provided' : 'Missing',
+			DB_NAME: process.env.DB_NAME || 'Missing',
+			OPENAI_API_KEY: process.env.OPENAI_API_KEY ? 'Provided' : 'Missing',
+			MS_KEY: process.env.MS_KEY ? 'Provided' : 'Missing',
+			SANITY_CHECKER_INSTRUCTIONS: process.env.SANITY_CHECKER_INSTRUCTIONS || 'Missing',
+			SOLUTION_REFINER_INSTRUCTIONS: process.env.SOLUTION_REFINER_INSTRUCTIONS || 'Missing',
+			VALIDITY_INSTRUCTIONS: process.env.VALIDITY_INSTRUCTIONS || 'Missing',
+			QUALITY_INSTRUCTIONS: process.env.QUALITY_INSTRUCTIONS || 'Missing',
+			FEEDBACK_CLEANER_INSTRUCTIONS: process.env.FEEDBACK_CLEANER_INSTRUCTIONS || 'Missing',
+			COT_SHOTS_SANITY_CHECKER: process.env.COT_SHOTS_SANITY_CHECKER || 'Missing',
+			COT_SHOTS_QUALITY_CHECKER: process.env.COT_SHOTS_QUALITY_CHECKER || 'Missing',
+			COT_SHOTS_VALIDITY: process.env.COT_SHOTS_VALIDITY || 'Missing',
+	});
+});
 
 const port = 3000
 
