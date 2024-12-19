@@ -337,7 +337,7 @@ class QuantaFTT {
 		correctSolutions,
 		inputSolution,
 		optionalReviewingRequirements,
-		numReruns = 5,
+		numReruns = 2, // change heree
 		currentConfidenceLevel = 0.95
 	) {
 		const qualityFeedbacksList = []
@@ -872,6 +872,7 @@ app.post('/generateResponse', async (req, res) => {
 		if (rows.length === 0) {
 			return res.status(404).json({ error: 'Problem not found' })
 		}
+		console.log(rows)
 
 		const { problem_statement, solution, extra_requirements_validity } = rows[0]
 		const response = await evaluateSolution(
