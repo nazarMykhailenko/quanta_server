@@ -572,12 +572,12 @@ app.use(
     origin: [
       'https://q-testing.webflow.io',
       'https://quanta.world',
-      'https://www.quanta.world',
+      'https://www.quanta.world/',
       'http://localhost:63342',
     ],
-    methods: ['GET', 'POST'], // Include all HTTP methods used by your API
-    allowedHeaders: ['Content-Type'], // Ensure the headers are allowed
-    credentials: true, // Include this if you're dealing with cookies or authentication
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Include any additional headers
+    credentials: true,
   })
 );
 app.use(
