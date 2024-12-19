@@ -337,7 +337,7 @@ class QuantaFTT {
 		correctSolutions,
 		inputSolution,
 		optionalReviewingRequirements,
-		numReruns = 2, // change heree
+		numReruns = 5, 
 		currentConfidenceLevel = 0.95
 	) {
 		const qualityFeedbacksList = []
