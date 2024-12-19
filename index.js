@@ -575,9 +575,9 @@ app.use(
       'https://www.quanta.world',
       'http://localhost:63342',
     ],
-    methods: ['GET', 'POST'], // Allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Headers client can send
-    credentials: true, // Allow cookies/credentials
+    methods: ['GET', 'POST'], // Include all HTTP methods used by your API
+    allowedHeaders: ['Content-Type'], // Ensure the headers are allowed
+    credentials: true, // Include this if you're dealing with cookies or authentication
   })
 );
 app.use(
