@@ -572,7 +572,7 @@ app.use(
     origin: [
       'https://q-testing.webflow.io',
       'https://quanta.world',
-      'https://www.quanta.world/',
+      'https://www.quanta.world',
       'http://localhost:63342',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
