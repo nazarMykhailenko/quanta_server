@@ -967,6 +967,10 @@ app.post('/submitFeedback', async (req, res) => {
 	}
 })
 
+app.get('/', (req, res) => {
+	res.json({ status: 'ok' })
+})
+
 app.get('/status', async (req, res) => {
 	res.json({ status: 'ok' })
 })
