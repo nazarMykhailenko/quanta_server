@@ -580,11 +580,10 @@ app.use(
     credentials: true, // Include this if you're dealing with cookies or authentication
   })
 );
-app.UseCors(x => x
-	.AllowAnyMethod()
-	.AllowAnyHeader()
-	.SetIsOriginAllowed(origin => true) // allow any origin
-	.AllowCredentials()); // allow credentials
+app.use((req, res, next) => {
+	req.header('Access-Control-Allow-Origin', '*');
+	next();
+});
 app.use(
 	rateLimit({
 		windowMs: 15 * 60 * 1000, // 15 minutes
