@@ -570,6 +570,7 @@ app.use(express.json())
 app.use(
   cors({
     origin: [
+			'https://quantaapi.vercel.app',
       'https://q-testing.webflow.io',
       'https://quanta.world',
       'https://www.quanta.world',
@@ -581,7 +582,7 @@ app.use(
   })
 );
 app.use((req, res, next) => {
-	req.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Origin', '*');
 	next();
 });
 app.use(
