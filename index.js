@@ -1,11 +1,11 @@
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 import http from 'http'
-import mysql from 'mysql2/promise';
-import memberstackAdmin from '@memberstack/admin';
-import rateLimit from 'express-rate-limit';
-import { OpenAI } from 'openai';
+import mysql from 'mysql2/promise'
+import memberstackAdmin from '@memberstack/admin'
+import rateLimit from 'express-rate-limit'
+import { OpenAI } from 'openai'
 
 class QuantaFTT {
 	constructor(
@@ -626,7 +626,16 @@ async function initialize() {
 		const cotShotsQualityUrl = process.env.COT_SHOTS_QUALITY_CHECKER
 		const cotShotsValidityUrl = process.env.COT_SHOTS_VALIDITY
 
-		// Ensure all environment variables are set
+		console.log(`cotShotsValidityUrl: ${cotShotsValidityUrl}`)
+		console.log(`cotShotsQualityUrl: ${cotShotsQualityUrl}`)
+		console.log(`cotShotsSanityUrl: ${cotShotsSanityUrl}`)
+		console.log(`feedbackCleanerUrl: ${feedbackCleanerUrl}`)
+		console.log(`qualityInstructionUrl: ${qualityInstructionUrl}`)
+		console.log(`validityInstructionUrl: ${validityInstructionUrl}`)
+		console.log(`solutionRefinerUrl: ${solutionRefinerUrl}`)
+		console.log(`sanityCheckerUrl: ${sanityCheckerUrl}`)
+
+		// Check if any environment variables are missing
 		if (
 			!sanityCheckerUrl ||
 			!solutionRefinerUrl ||
@@ -640,7 +649,7 @@ async function initialize() {
 			throw new Error('One or more environment variables are not defined')
 		}
 
-		// Load all content in parallel
+		// Load content
 		const [
 			instructionsSanityChecker,
 			instructionsSolRefiner,
@@ -661,7 +670,7 @@ async function initialize() {
 			loadContentFromURL(cotShotsValidityUrl),
 		])
 
-		// Check if any content failed to load
+		// Verify content was loaded
 		if (
 			!instructionsSanityChecker ||
 			!instructionsSolRefiner ||
@@ -675,7 +684,7 @@ async function initialize() {
 			throw new Error('Failed to load one or more instruction files')
 		}
 
-		// Initialize QuantaFTT after all content is loaded
+		// Initialize QuantaFTT
 		quantaFTT = new QuantaFTT(
 			process.env.OPENAI_API_KEY,
 			instructionsSanityChecker,
@@ -686,11 +695,11 @@ async function initialize() {
 			cotShotsSanity,
 			cotShotsQuality,
 			cotShotsValidity,
-			'gpt-4o', // For sanity feedback
-			'gpt-4o', // For solution refinement
-			'gpt-4o', // For validity feedback
-			'gpt-4o', // For quality feedback,
-			'gpt-4o' // For feedback cleaning
+			'gpt-4o', // Model ID
+			'gpt-4o',
+			'gpt-4o',
+			'gpt-4o',
+			'gpt-4o'
 		)
 
 		console.log('QuantaFTT initialized successfully')
@@ -973,6 +982,29 @@ app.get('/', (req, res) => {
 
 app.get('/status', async (req, res) => {
 	res.json({ status: 'ok' })
+})
+
+app.get('/env-check', (req, res) => {
+	res.json({
+		DB_HOST: process.env.DB_HOST || 'Missing',
+		DB_USER: process.env.DB_USER || 'Missing',
+		DB_PASSWORD: process.env.DB_PASSWORD ? 'Provided' : 'Missing',
+		DB_NAME: process.env.DB_NAME || 'Missing',
+		OPENAI_API_KEY: process.env.OPENAI_API_KEY ? 'Provided' : 'Missing',
+		MS_KEY: process.env.MS_KEY ? 'Provided' : 'Missing',
+		SANITY_CHECKER_INSTRUCTIONS:
+			process.env.SANITY_CHECKER_INSTRUCTIONS || 'Missing',
+		SOLUTION_REFINER_INSTRUCTIONS:
+			process.env.SOLUTION_REFINER_INSTRUCTIONS || 'Missing',
+		VALIDITY_INSTRUCTIONS: process.env.VALIDITY_INSTRUCTIONS || 'Missing',
+		QUALITY_INSTRUCTIONS: process.env.QUALITY_INSTRUCTIONS || 'Missing',
+		FEEDBACK_CLEANER_INSTRUCTIONS:
+			process.env.FEEDBACK_CLEANER_INSTRUCTIONS || 'Missing',
+		COT_SHOTS_SANITY_CHECKER: process.env.COT_SHOTS_SANITY_CHECKER || 'Missing',
+		COT_SHOTS_QUALITY_CHECKER:
+			process.env.COT_SHOTS_QUALITY_CHECKER || 'Missing',
+		COT_SHOTS_VALIDITY: process.env.COT_SHOTS_VALIDITY || 'Missing',
+	})
 })
 
 const port = 3000
