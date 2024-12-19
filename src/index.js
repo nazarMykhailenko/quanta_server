@@ -980,5 +980,3 @@ const port = 3000
 http.createServer(app).listen(port, () => {
 	console.log('HTTP server running on port' + port)
 })
-
-export default app
