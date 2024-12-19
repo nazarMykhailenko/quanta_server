@@ -575,11 +575,34 @@ app.use(
       'https://www.quanta.world',
       'http://localhost:63342',
     ],
-    methods: ['GET', 'POST'], // Include all HTTP methods used by your API
-    allowedHeaders: ['Content-Type', 'Authorization'], // Include other headers if needed
-    credentials: true, // Include this for cookies or credentials
+    methods: ['GET', 'POST'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Headers client can send
+    credentials: true, // Allow cookies/credentials
   })
 );
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    'https://q-testing.webflow.io',
+    'https://quanta.world',
+    'https://www.quanta.world',
+    'http://localhost:63342',
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(204); // Preflight response
+});
 app.use(
 	rateLimit({
 		windowMs: 15 * 60 * 1000, // 15 minutes
