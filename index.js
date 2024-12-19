@@ -580,13 +580,11 @@ app.use(
     credentials: true, // Include this if you're dealing with cookies or authentication
   })
 );
-app.use((req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', 'https://www.quanta.world');
-	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-	res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-	res.setHeader('Access-Control-Allow-Credentials', 'true'); // Optional if you're sending cookies
-	next();
-});
+app.UseCors(x => x
+	.AllowAnyMethod()
+	.AllowAnyHeader()
+	.SetIsOriginAllowed(origin => true) // allow any origin
+	.AllowCredentials()); // allow credentials
 app.use(
 	rateLimit({
 		windowMs: 15 * 60 * 1000, // 15 minutes
