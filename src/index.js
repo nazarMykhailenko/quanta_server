@@ -1,11 +1,11 @@
-const express = require('express')
-const cors = require('cors')
-require('dotenv').config()
-const http = require('http')
-const mysql = require('mysql2/promise')
-const memberstackAdmin = require('@memberstack/admin')
-const rateLimit = require('express-rate-limit')
-const { OpenAI } = require('openai')
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv';
+import http from 'http'
+import mysql from 'mysql2/promise';
+import memberstackAdmin from '@memberstack/admin';
+import rateLimit from 'express-rate-limit';
+import { OpenAI } from 'openai';
 
 class QuantaFTT {
 	constructor(
@@ -564,6 +564,7 @@ class QuantaFTT {
 	}
 }
 
+dotenv.config()
 const app = express()
 app.use(express.json())
 app.use(
@@ -975,3 +976,5 @@ const port = 3000
 http.createServer(app).listen(port, () => {
 	console.log('HTTP server running on port' + port)
 })
+
+export default app
