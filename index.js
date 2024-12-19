@@ -568,18 +568,25 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 app.use(
-	cors({
-		origin: [
-			'https://q-testing.webflow.io',
-			'https://quanta.world',
-			'https://www.quanta.world',
-			'http://localhost:63342',
-		],
-		methods: ['GET', 'POST'], // Include all HTTP methods used by your API
-		allowedHeaders: ['Content-Type'], // Ensure the headers are allowed
-		credentials: true, // Include this if you're dealing with cookies or authentication
-	})
-)
+  cors({
+    origin: [
+      'https://q-testing.webflow.io',
+      'https://quanta.world',
+      'https://www.quanta.world',
+      'http://localhost:63342',
+    ],
+    methods: ['GET', 'POST'], // Include all HTTP methods used by your API
+    allowedHeaders: ['Content-Type'], // Ensure the headers are allowed
+    credentials: true, // Include this if you're dealing with cookies or authentication
+  })
+);
+app.use((req, res, next) => {
+	res.setHeader('Access-Control-Allow-Origin', 'https://www.quanta.world');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+	res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+	res.setHeader('Access-Control-Allow-Credentials', 'true'); // Optional if you're sending cookies
+	next();
+});
 app.use(
 	rateLimit({
 		windowMs: 15 * 60 * 1000, // 15 minutes
