@@ -886,7 +886,7 @@ app.post('/generateResponse', async (req, res) => {
 			user_id,
 			problem_id,
 			student_solution,
-			response['Overall Grade'] || '-',
+			response['Overall_Grade'] || '-',
 			response,
 		])
 
